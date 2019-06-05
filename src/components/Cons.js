@@ -6,6 +6,8 @@ import Input from './Input';
 
 const Cons = (props) => {
 
+    let id = 0; 
+
     const [conList, addCon] = useState([]);
     const [input, setInput] = useState('');
 
@@ -28,7 +30,7 @@ const Cons = (props) => {
         <div>
             <h2>cons</h2>
         <ol>
-            {conList.map((con) => <li key={con}>{con}</li>)}
+            {conList.map((con) => <li key={++id}>{con}</li>)}
             <li>
             <Input
                 changed={change}

@@ -2,6 +2,9 @@ import React, {useState} from 'react';
 import Input from './Input';
 
 const Pros = (props) => {
+
+    let id = 0;
+
     const [prosList, addPro] = useState([]);
     const [input, setInput] = useState('');
 
@@ -24,7 +27,7 @@ const Pros = (props) => {
         <div>
             <h2>pros</h2>
         <ol>
-            {prosList.map((pro) => <li key={pro}>{pro}</li>)}
+            {prosList.map((pro) => <li key={++id}>{pro}</li>)}
             <li>
                 <Input 
                     submited={submit}
