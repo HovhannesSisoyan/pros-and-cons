@@ -1,11 +1,14 @@
 import React from 'react';
+import classes from './Input.css';
 
 const Input = (props) => {
     return (
-        <input    
+        <input
+           className={classes.Input}  
            value={props.value}
            onChange={props.changed}
-           onKeyPress={props.submited}/>
+           onKeyPress={props.submited}
+           onBlur={props.blur}/>
     );
 };
 
