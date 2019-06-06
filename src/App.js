@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { memo } from 'react';
+
 import Layout from './components/Layout';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-      <Layout/>
-    </div>
-  );
-}
+const App = () => (
+  <div className="App">
+    <header className="App-header" />
+    <Layout />
+  </div>
+);
 
-export default App;
+export default memo(App);

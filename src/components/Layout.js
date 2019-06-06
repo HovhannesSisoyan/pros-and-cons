@@ -3,7 +3,6 @@ import Pros from './Pros';
 import Cons from './Cons';
 import classes from './Layout.css';
 
-
 const Layout = (props) => {
     return (
         <div className={classes.Layout}>

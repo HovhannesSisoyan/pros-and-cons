@@ -1,77 +1,32 @@
-import React, {useState} from 'react';
-import Input from './Input';
-import classes from './Pros.css';
+import React from 'react';
+import  { connect } from 'react-redux';
+import * as actionTypes from '../store/actions';
+import List from './List';
 
 const Pros = (props) => {
 
-    let id = 100;
-
-    const [prosList, addPro] = useState([]);
-    const [input, setInput] = useState('');
-    const [emptyInput, setEmptyInput] = useState(false);
-
-    const submit = (event) => {
-        if(event.target.value === '') return;
-        if (event.key === "Enter") {
-        addPro([
-            ...prosList,
-            input
-        ]);
-        setInput('');
-        setEmptyInput(false);
-        }
-    }
-
-    const edit = (event, id) => {
-        prosList[id] = event.target.value;
-        if(event.target.value === '') {
-            prosList.splice(id,1);
-        }
-        addPro([
-            ...prosList        
-        ]);
-    }
     
-    const change = (event) => {
-        if(event.target.value !== ''){
-            setEmptyInput(true);
-        } else setEmptyInput(false); 
-        setInput(event.target.value);
-    }
-    
-    const blured = (event) => {
-        if(event.target.value === '') return;
-        addPro([
-            ...prosList,
-            input
-        ]);
-        setInput('');
-        setEmptyInput(false);
-    }
-
     return (
-        <div className={classes.Pros} >
-            <h2>pros</h2>
-            <hr/>
-                <ol >
-                    {prosList.map((pro, index) => (
-                        <li key={++id}> <Input
-                                            value={pro}
-                                            changed={(event) => edit(event, index)} />
-                        </li>))}
-                    <li>
-                        <Input 
-                            submited={submit}
-                            changed={(event) => change(event)}
-                            value={input}
-                            blur={blured}
-                            />
-                    </li>
-                    {emptyInput ? <li><Input /> </li> : null}
-                </ol>
+        <div>
+            <h2>PROS</h2>
+            <List items={props.items}
+                  onItemAdded={props.onProAdded}
+                  onItemEdited={props.onProEdited}/>
         </div>
         
     )
 }
+const mapStateToProps = state => {
+    return {
+        items: state.prosList
+    }
+};
 
-export default Pros
+const mapDispatchToProps = dispatch => {
+    return {
+        onProAdded: (item) => dispatch({type: actionTypes.ADD_PRO, item: item}),
+        onProEdited: (event, index) => dispatch({type: actionTypes.EDIT_PRO, event: event, index: index})
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pros)

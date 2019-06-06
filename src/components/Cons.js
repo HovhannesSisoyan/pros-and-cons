@@ -1,79 +1,40 @@
-import React, {useState} from 'react';
-import Input from './Input';
-import classes from './Cons.css'
+import React, { useCallback } from 'react';
+import  { connect } from 'react-redux';
+import * as actionTypes from '../store/actions';
+import List from './List';
 
+const Cons = ({ dispatch, items }) => {
 
-const Cons = (props) => {
-
-    let id = 100;
-
-    const [consList, addCon] = useState([]);
-    const [input, setInput] = useState('');
-    const [emptyInput, setEmptyInput] = useState(false);
-
-    const submit = (event) => {
-        if(event.target.value === '') return;
-        if (event.key === "Enter") {
-        addCon([
-            ...consList,
-            input
-        ]);
-        setInput('');
-        setEmptyInput(false);
-        }
-    }
-
-    const edit = (event, id) => {
-        consList[id] = event.target.value;
-        if(event.target.value === '') {
-            consList.splice(id,1);
-        }
-        addCon([
-            ...consList        
-        ]);
-    }
-    
-    const change = (event) => {
-        if(event.target.value !== ''){
-            setEmptyInput(true);
-        } else setEmptyInput(false); 
-        setInput(event.target.value);
-    }
-    
-    const blured = (event) => {
-        if(event.target.value === '') return;
-        addCon([
-            ...consList,
-            input
-        ]);
-        setInput('');
-        setEmptyInput(false);
-    }
+    const onConAdded = useCallback(item =>
+        dispatch({ type: actionTypes.ADD_CON, item }),
+        [actionTypes, dispatch]
+    );
+    const onConEdited = useCallback((event, index) =>
+        dispatch({type: actionTypes.EDIT_CON, event, index}),
+        [actionTypes, dispatch]
+    );
 
     return (
-        <div className={classes.Cons} >
-            <h2>pros</h2>
-            <hr/>
-                <ol >
-                    {consList.map((con, index) => (
-                        <li key={++id}> <Input
-                                            value={con}
-                                            changed={(event) => edit(event, index)} />
-                        </li>))}
-                    <li>
-                        <Input 
-                            submited={submit}
-                            changed={(event) => change(event)}
-                            value={input}
-                            blur={blured}
-                            />
-                    </li>
-                    {emptyInput ? <li><Input /> </li> : null}
-                </ol>
+        <div>
+            <h2>CONS</h2>
+            <List
+                items={items}
+                onItemAdded={onConAdded}
+                onItemEdited={onConEdited}
+            />
         </div>
         
-    )
-}
+    );
+};
 
+const mapStateToProps = state => {
+    return {
+        items: state.consList
+    };
+};
 
-export default Cons
+const mapDispatchToProps = dispatch => ({
+    dispatch,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cons);
