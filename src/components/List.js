@@ -9,41 +9,48 @@ const List = (props) => {
     const [input, setInput] = useState('');
     const [emptyInput, setEmptyInput] = useState(false);
 
-    // useCallback
-
-    const submit = (event) => {
-        if ( event.key === "Enter" || event.keyCode === 13 || event.which === 13 ) {
-            if (input) {
-                props.onItemAdded(input);
-                setInput('');
-                setEmptyInput(false);
-            };
-        };
-    };
-
-    const blured = (event) => {
-        if(input !== ''){
+    const addItem = useCallback(() => {
+        if ( input ) {
             props.onItemAdded(input);
             setInput('');
             setEmptyInput(false);
         };
-    };
+    },[input, props]);
+
+    const submit = useCallback((event) => {
+        if ( event.key === "Enter" || event.keyCode === 13 || event.which === 13 ) {
+            addItem();
+        };
+    },[addItem]);
+
+    const blured = useCallback(() => 
+        addItem(),
+        [addItem]);
     
-    const change = (event) => {
+    const change = useCallback((event) => {
         if(event.target.value !== ''){
             !emptyInput && setEmptyInput(true);
         } else {
             emptyInput && setEmptyInput(false);
         }; 
         setInput(event.target.value);
-    }
+    },[emptyInput]);
+
     
     const list = (
         <ol >
             {props.items.map((item, index) => (
-                <li key={++id}> <Input
-                                    value={item}
-                                    changed={(event) => props.onItemEdited(event, index)} />
+                <li 
+                    className="input class"
+                    key={++id}
+                    draggable='true'
+                    onDragStart={(event) => props.onDragStart(event, index)}
+                    //onDragEnd={(event) => props.onDragEnd(event, index)}
+                    > 
+                        <Input
+                            value={item}
+                            changed={(event) => props.onItemEdited(event, index)}
+                        />
                 </li>))}
             <li>
                 <Input 
@@ -69,8 +76,8 @@ const List = (props) => {
             {list}  
         </div>
         
-    )
-}
+    );
+};
 
 export default List
 
