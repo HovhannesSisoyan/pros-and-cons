@@ -41,25 +41,28 @@ const List = (props) => {
         <ol >
             {props.items.map((item, index) => (
                 <li 
-                    className="input class"
                     key={++id}
                     draggable='true'
                     onDragStart={(event) => props.onDragStart(event, index)}
-                    //onDragEnd={(event) => props.onDragEnd(event, index)}
+                    onDrop={props.droped}
+                    onDragOver={props.onDragOver}
                     > 
                         <Input
                             value={item}
                             changed={(event) => props.onItemEdited(event, index)}
                         />
                 </li>))}
-            <li>
-                <Input 
-                    submited={submit}
-                    changed={change}
-                    value={input}
-                    blured={blured}
-                />
-            </li>
+                <li>
+                    <Input
+                        draggable='true'
+                        onDrop={props.droped}
+                        onDragOver={props.onDragOver}
+                        submited={submit}
+                        changed={change}
+                        value={input}
+                        blured={blured}
+                    />
+                </li>
             {emptyInput ? (<li>
                             <Input 
                                 submited={submit}

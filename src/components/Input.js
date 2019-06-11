@@ -7,7 +7,6 @@ const Input = ({ changed, submited, blured, draged, ...restProps }) => {
            className={classes.Input}
            onChange={changed}
            onKeyPress={submited}
-           //onDrag={draged}
            onBlur={blured}
            {...restProps}
         />

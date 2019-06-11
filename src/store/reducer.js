@@ -1,10 +1,10 @@
 import * as actionTypes from './actions';
-
 import initialState from './initialState';
 
 const reducer = (state = initialState, action) => {
 
     let tempArray = [];
+    let tempArray2 = [];
     let tempString = '';
     let index;
 
@@ -31,18 +31,27 @@ const reducer = (state = initialState, action) => {
             };
         
         case actionTypes.DRAG_PRO_START:
+            state.dragingIndex = action.index;
+            state.dragingFrom = 'pro';
+            tempString = state.prosList[state.dragingIndex];
             return {
                 ...state,
-                dragingItem: state.prosList[action.index]
+                dragingItem: tempString
             };
 
-        case actionTypes.DRAG_PRO_END:
+        case actionTypes.DROP_PRO:
             tempArray = [...state.prosList];
-            tempArray.splice(action.index, 1);
+            tempArray2 = [...state.consList];
+            if (state.dragingFrom === 'pro') {
+                tempArray.splice(state.dragingIndex, 1);
+            };
+            if (state.dragingFrom === 'con') {
+                tempArray2.splice(state.dragingIndex, 1);
+            };
             return {
                 ...state,
-                prosList: [...tempArray],
-                consList: state.consList.concat(state.dragingItem),
+                prosList: [...tempArray].concat(state.dragingItem),
+                consList: [...tempArray2],
                 dragingItem: ''
             };
         
@@ -57,27 +66,36 @@ const reducer = (state = initialState, action) => {
             tempString = action.event.target.value;
             index = action.index;
             tempArray[index] = tempString;
-            if (!tempString) {
+            if(!tempString) {
                 tempArray.splice(index, 1);
-            };
-        return {
-            ...state,
-            consList: [...tempArray]
-        };
-
-        case actionTypes.DRAG_CON_START:
-            return {
-                ...state,
-                dragingItem: state.consList[action.index]
-            };
-        
-        case actionTypes.DRAG_CON_END:
-            tempArray = [...state.consList];
-            tempArray.splice(action.index, 1);
+            }
             return {
                 ...state,
                 consList: [...tempArray],
-                prosList: state.prosList.concat(state.dragingItem),
+            };
+
+        case actionTypes.DRAG_CON_START:
+            state.dragingIndex = action.index;
+            state.dragingFrom = 'con';
+            tempString = state.consList[state.dragingIndex];
+            return {
+                ...state,
+                dragingItem: tempString
+            };
+        
+        case actionTypes.DROP_CON:
+            tempArray = [...state.prosList];
+            tempArray2 = [...state.consList];
+            if (state.dragingFrom === 'pro') {
+                tempArray.splice(state.dragingIndex, 1);
+            };
+            if (state.dragingFrom === 'con') {
+                tempArray2.splice(state.dragingIndex, 1);
+            };
+            return {
+                ...state,
+                prosList: [...tempArray],
+                consList: [...tempArray2].concat(state.dragingItem),
                 dragingItem: ''
             };
 

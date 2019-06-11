@@ -11,7 +11,10 @@
 }
 
 .ProsCons {
+    text-align: center;
+    position: relative center;
     display: flex;
+    flex-flow: row;
 
 }
 

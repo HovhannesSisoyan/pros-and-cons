@@ -16,38 +16,28 @@ const Cons = ({ dispatch, items }) => {
     );
 
     const onDragStart = useCallback((event, index) => 
-        dispatch({type: actionTypes.DRAG_CON_START, event, index}),
-        [dispatch]
-    );
-
-    const onDragEnd = useCallback((event, index) => 
-        dispatch({type: actionTypes.DRAG_CON_END, event, index}),
-        [dispatch]
-    );
-    const onDragOver = useCallback((event) => {
+            dispatch({type: actionTypes.DRAG_CON_START, event, index}),
+            [dispatch]);
+    
+    const onDragOver = (event) => {
         event.preventDefault();
-        console.log(event.target.className)
-    });
+    };
 
-    const onDrop = useCallback((event) => {
-        event.preventDefault();
-        console.log("onDrop cons")
-    });
-
-
+    const onDrop = useCallback(() => 
+            dispatch({type: actionTypes.DROP_CON}),
+            [dispatch]
+    );
 
     return (
         <div>
             <h2>CONS</h2>
             <List
-                className="cons"
                 items={items}
                 onItemAdded={onConAdded}
                 onItemEdited={onConEdited}
                 onDragStart={onDragStart}
-                onDragEnd={onDragEnd}
                 onDragOver={(event) => onDragOver(event)}
-                onDrop={onDrop}
+                droped={onDrop}
             />
         </div>
         
