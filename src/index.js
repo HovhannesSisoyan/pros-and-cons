@@ -9,9 +9,9 @@ import reducer from './store/reducer';
 const store = createStore(reducer);
 
 const App = (
-    <Provider store={store}>
-        <AppModule />
-    </Provider>
+  <Provider store={store}>
+    <AppModule />
+  </Provider>
 );
 
 ReactDOM.render(App, document.getElementById('root'));
