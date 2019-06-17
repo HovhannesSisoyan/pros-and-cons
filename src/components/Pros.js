@@ -47,7 +47,7 @@ const Pros = ({ dispatch, items }) => {
         
     );
 };
-const mapStateToProps = state => {
+const mapStateToProps = (state, props) => {
     return {
         items: state.prosList
     };
@@ -57,4 +57,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pros)
+export default connect(mapStateToProps, mapDispatchToProps)(Pros);
+
+// DRY - 

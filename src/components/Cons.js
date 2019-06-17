@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import  { connect } from 'react-redux';
+
 import * as actionTypes from '../store/actions';
 import List from './List';
 
@@ -15,9 +16,7 @@ const Cons = ({ dispatch, items }) => {
         [dispatch]
     );
 
-    const onDragStart = useCallback((event, index) => 
-            dispatch({type: actionTypes.DRAG_CON_START, event, index}),
-            [dispatch]);
+    const onDragStart = useCallback((event, index) => dispatch({type: actionTypes.DRAG_CON_START, event, index}), [dispatch]);
     
     const onDragOver = (event) => {
         event.preventDefault();

@@ -129,5 +129,8 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "prettier": "^1.18.2"
   }
 }
