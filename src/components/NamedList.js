@@ -1,12 +1,17 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import * as actionTypes from '../store/actions';
 import List from './List';
 
 const Pros = ({ name, dispatch, items }) => {
+  // eslint-disable-next-line arrow-body-style
+  /* useEffect(() => {
+    dispatch({ type: actionTypes.initializeLists(items) });
+  }, [dispatch, name, items]);
+  */
   const onItemAdded = useCallback(
     item => {
       let tmp;

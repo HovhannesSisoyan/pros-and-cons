@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-plusplus */
 /* eslint-disable prefer-destructuring */
 import * as actionTypes from './actions';
 import initialState from './initialState';
@@ -9,6 +11,11 @@ const reducer = (state = initialState, action) => {
   let index;
 
   switch (action.type) {
+    case actionTypes.INIT_LISTS:
+      console.log('actiontypes.init.lists');
+      return {
+        initialState,
+      };
     case actionTypes.ADD_PRO:
       return {
         ...state,
