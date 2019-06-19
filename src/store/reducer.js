@@ -13,8 +13,12 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.INIT_LISTS:
       console.log('actiontypes.init.lists');
+      console.log(action);
+      // eslint-disable-next-line no-case-declarations
       return {
-        initialState,
+        ...state,
+        prosList: [...action.pList],
+        consList: [...action.cList],
       };
     case actionTypes.ADD_PRO:
       return {

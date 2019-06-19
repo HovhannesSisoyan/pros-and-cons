@@ -1,24 +1,26 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
-import * as actionTypes from '../store/actions';
+import * as actionCreators from '../store/actionCreators';
 import List from './List';
 
 const Pros = ({ name, dispatch, items }) => {
   // eslint-disable-next-line arrow-body-style
-  /* useEffect(() => {
-    dispatch({ type: actionTypes.initializeLists(items) });
-  }, [dispatch, name, items]);
-  */
+  /*useEffect(() => dispatch(actionCreators.initLists()), [
+    dispatch,
+    name,
+    items,
+  ]); */
   const onItemAdded = useCallback(
     item => {
       let tmp;
       name === 'pros'
-        ? (tmp = actionTypes.ADD_PRO)
-        : (tmp = actionTypes.ADD_CON);
-      return dispatch({ type: tmp, item });
+        ? (tmp = actionCreators.addPro)
+        : (tmp = actionCreators.addCon);
+      return dispatch(tmp(item));
     },
     [dispatch, name]
   );
@@ -27,9 +29,9 @@ const Pros = ({ name, dispatch, items }) => {
     (event, index) => {
       let tmp;
       name === 'pros'
-        ? (tmp = actionTypes.EDIT_PRO)
-        : (tmp = actionTypes.EDIT_CON);
-      return dispatch({ type: tmp, event, index });
+        ? (tmp = actionCreators.editPro)
+        : (tmp = actionCreators.editCon);
+      return dispatch(tmp(event, index));
     },
     [dispatch, name]
   );
@@ -38,9 +40,9 @@ const Pros = ({ name, dispatch, items }) => {
     (event, index) => {
       let tmp;
       name === 'pros'
-        ? (tmp = actionTypes.DRAG_PRO_START)
-        : (tmp = actionTypes.DRAG_CON_START);
-      return dispatch({ type: tmp, event, index });
+        ? (tmp = actionCreators.dragProStart)
+        : (tmp = actionCreators.dragConStart);
+      return dispatch(tmp(event, index));
     },
     [dispatch, name]
   );
@@ -52,9 +54,9 @@ const Pros = ({ name, dispatch, items }) => {
   const onDrop = useCallback(() => {
     let tmp;
     name === 'pros'
-      ? (tmp = actionTypes.DROP_PRO)
-      : (tmp = actionTypes.DROP_CON);
-    return dispatch({ type: tmp });
+      ? (tmp = actionCreators.dropPro)
+      : (tmp = actionCreators.dropCon);
+    return dispatch(tmp());
   }, [dispatch, name]);
 
   return (

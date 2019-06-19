@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 
 import NamedList from './NamedList';
 import classes from './Layout.css';
+import * as actionCreators from '../store/actionCreators';
 
-const Layout = () => (
-  <div className={classes.Layout}>
-    <h2 className={classes.Header}>Should I eat at McDonalds?</h2>
-    <div className={classes.ProsCons}>
-      <NamedList name="pros" />
-      <NamedList name="cons" />
+// eslint-disable-next-line react/prop-types
+const Layout = ({ dispatch }) => {
+  useEffect(() => dispatch(actionCreators.initLists()), [dispatch]);
+  return (
+    <div className={classes.Layout}>
+      <h2 className={classes.Header}>Should I eat at McDonalds?</h2>
+      <div className={classes.ProsCons}>
+        <NamedList name="pros" />
+        <NamedList name="cons" />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
-export default Layout;
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+});
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Layout);
