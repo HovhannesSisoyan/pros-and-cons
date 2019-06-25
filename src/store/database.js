@@ -1,7 +1,11 @@
+/* eslint-disable no-return-await */
+/* eslint-disable import/no-useless-path-segments */
 /* eslint-disable spaced-comment */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-shadow */
-const readFromDatabase = () => {
+async function readFromDatabase() {
+  // let pList = [];
+  // let cList = [];
   const prepareDatabase = () =>
     openDatabase('proscons', '1.0', 'proscons', 2 * 1024 * 1024);
 
@@ -50,21 +54,11 @@ const readFromDatabase = () => {
       );
     });
   };
-
-  const db = prepareDatabase();
-  createTables(db);
-  const pList = collectPros(db);
-  const cList = collectCons(db);
-  console.log(pList);
-  return {
-    pList,
-    cList,
-  };
-};
+  const db = await prepareDatabase();
+  await createTables(db);
+  return await collectPros(db);
+  // cList = await collectCons(db);
+  // console.log(pList);
+}
 
 export default readFromDatabase;
-
-// const readFromDatabase = () =>
-//  setTimeout(console.log('read from database'), 5000);
-
-// export default readFromDatabase;
