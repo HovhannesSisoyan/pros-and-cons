@@ -11,4 +11,7 @@ export const EDIT_CON = 'EDIT_CON';
 export const DRAG_CON_START = 'DRAG_CON_START';
 export const DROP_CON = 'DROP_CON';
 
-export const INIT_LISTS = 'INIT_LISTS';
+export const INIT_PROS = 'INIT_PROS';
+export const INIT_CONS = 'INIT_CONS';
+
+export const STORE = 'STORE';

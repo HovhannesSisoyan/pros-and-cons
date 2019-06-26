@@ -2,6 +2,8 @@
 /* eslint-disable no-empty-pattern */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-shadow */
+import { readFromDatabase } from './database';
+
 import * as actionTypes from './actions';
 
 export const addPro = item => ({
@@ -46,14 +48,9 @@ export const dropCon = () => ({
   type: actionTypes.DROP_CON,
 });
 
-export const initializeLists = () => ({
-  type: actionTypes.INIT_LISTS,
+export const initLists = () => dispatch => {
+  readFromDatabase(dispatch);
+};
+export const store = () => ({
+  type: actionTypes.STORE,
 });
-
-/* export const initLists = () => dispatch => {
-  const lists = readFromDatabase();
-  const pList = lists.pList;
-  const cList = lists.cList;
-  console.log(pList);
-  dispatch(initializeLists(pList, cList));
-}; */

@@ -8,12 +8,10 @@ import * as actionCreators from '../store/actionCreators';
 import List from './List';
 
 const Pros = ({ name, dispatch, items }) => {
-  // eslint-disable-next-line arrow-body-style
-  /*useEffect(() => dispatch(actionCreators.initLists()), [
-    dispatch,
-    name,
-    items,
-  ]); */
+  window.addEventListener('beforeunload', function(event) {
+    event.preventDefault();
+    return dispatch(actionCreators.store());
+  });
   const onItemAdded = useCallback(
     item => {
       let tmp;

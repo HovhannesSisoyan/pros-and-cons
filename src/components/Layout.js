@@ -9,10 +9,10 @@ import * as actionCreators from '../store/actionCreators';
 
 // eslint-disable-next-line react/prop-types
 const Layout = ({ dispatch }) => {
-  /* useEffect(() => {
-    dispatch(actionCreators.initializeLists(), []);
-  }); */
-  dispatch(actionCreators.initializeLists());
+  useEffect(() => {
+    dispatch(actionCreators.initLists(), []);
+  });
+
   return (
     <div className={classes.Layout}>
       <h2 className={classes.Header}>Should I eat at McDonalds?</h2>
