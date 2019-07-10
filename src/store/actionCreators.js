@@ -2,7 +2,8 @@
 /* eslint-disable no-empty-pattern */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-shadow */
-import { readFromDatabase } from './database';
+import { readFromWebSQL } from './localStorage/readFromWebSQL';
+import { writeToWebSQL } from './localStorage/writeToWebSQL';
 
 import * as actionTypes from './actions';
 
@@ -49,8 +50,9 @@ export const dropCon = () => ({
 });
 
 export const initLists = () => dispatch => {
-  readFromDatabase(dispatch);
+  readFromWebSQL(dispatch);
 };
-export const store = () => ({
-  type: actionTypes.STORE,
-});
+export const store = () => (dispatch, getState) => {
+  // console.log('actioncreators.store called');
+  writeToWebSQL(dispatch, getState);
+};

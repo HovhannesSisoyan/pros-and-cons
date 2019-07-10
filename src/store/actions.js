@@ -1,6 +1,3 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable no-shadow */
-
 export const ADD_PRO = 'ADD_PRO';
 export const EDIT_PRO = 'EDIT_PRO';
 export const DRAG_PRO_START = 'DRAG_PRO_START';

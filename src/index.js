@@ -4,7 +4,9 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 
+// eslint-disable-next-line import/no-cycle
 import AppModule from './App';
+// eslint-disable-next-line import/no-cycle
 import reducer from './store/reducer';
 
 const composeEnhancers =

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable arrow-body-style */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';

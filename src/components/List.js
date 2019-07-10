@@ -10,12 +10,7 @@ import Input from './Input';
 
 const List = props => {
   let id = 100;
-  /* window.addEventListener('beforeunload', function(event) {
-    event.preventDefault();
-    // eslint-disable-next-line no-use-before-define
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    return addItem(input);
-  }); */
+
   const [input, setInput] = useState('');
   const [emptyInput, setEmptyInput] = useState(false);
 
@@ -40,6 +35,7 @@ const List = props => {
 
   const change = useCallback(
     event => {
+      // event.persist();
       if (event.target.value !== '') {
         !emptyInput && setEmptyInput(true);
       } else {
@@ -73,7 +69,8 @@ const List = props => {
             onDrop={props.droped}
             onDragOver={props.onDragOver}
             submited={submit}
-            changed={change}
+            // eslint-disable-next-line no-restricted-globals
+            changed={() => change(event)}
             value={input}
             blured={blured}
           />

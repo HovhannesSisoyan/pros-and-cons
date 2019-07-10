@@ -5,7 +5,7 @@
 /* eslint-disable prefer-destructuring */
 import * as actionTypes from './actions';
 import initialState from './initialState';
-import { writeToDb } from './database';
+// import { writeToDb } from './localStorage/writeTolocalStorage';
 
 const reducer = (state = initialState, action) => {
   let tempArray = [];
@@ -74,7 +74,6 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.ADD_CON:
       tempArray = [...state.consList].concat(action.item);
-      // writeToDb(state.prosList, tempArray);
       return {
         ...state,
         consList: [...tempArray],
@@ -88,7 +87,6 @@ const reducer = (state = initialState, action) => {
       if (!tempString) {
         tempArray.splice(index, 1);
       }
-      // writeToDb(state.prosList, tempArray);
       return {
         ...state,
         consList: [...tempArray],
@@ -112,7 +110,6 @@ const reducer = (state = initialState, action) => {
       if (state.dragingFrom === 'con') {
         tempArray2.splice(state.dragingIndex, 1);
       }
-      // writeToDb(tempArray, tempArray2.concat(state.dragingItem));
       return {
         ...state,
         prosList: [...tempArray],
@@ -120,8 +117,8 @@ const reducer = (state = initialState, action) => {
         dragingItem: '',
       };
     case actionTypes.STORE:
-      writeToDb(state.prosList, state.consList);
       return state;
+    // break;
     default:
       return state;
   }

@@ -7,31 +7,33 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../store/actionCreators';
 import List from './List';
 
-const Pros = ({ name, dispatch, items }) => {
-  window.addEventListener('beforeunload', function(event) {
-    event.preventDefault();
+const NamedList = ({ name, dispatch, items }) => {
+  // eslint-disable-next-line arrow-body-style
+  const save = useCallback(() => {
     return dispatch(actionCreators.store());
-  });
+  }, [dispatch]);
   const onItemAdded = useCallback(
     item => {
       let tmp;
       name === 'pros'
         ? (tmp = actionCreators.addPro)
         : (tmp = actionCreators.addCon);
-      return dispatch(tmp(item));
+      dispatch(tmp(item));
+      save();
     },
-    [dispatch, name]
+    [dispatch, name, save]
   );
-
   const onItemEdited = useCallback(
     (event, index) => {
+      event.persist();
       let tmp;
       name === 'pros'
         ? (tmp = actionCreators.editPro)
         : (tmp = actionCreators.editCon);
-      return dispatch(tmp(event, index));
+      dispatch(tmp(event, index));
+      save();
     },
-    [dispatch, name]
+    [dispatch, name, save]
   );
 
   const onDragStart = useCallback(
@@ -40,9 +42,10 @@ const Pros = ({ name, dispatch, items }) => {
       name === 'pros'
         ? (tmp = actionCreators.dragProStart)
         : (tmp = actionCreators.dragConStart);
-      return dispatch(tmp(event, index));
+      dispatch(tmp(event, index));
+      save();
     },
-    [dispatch, name]
+    [dispatch, name, save]
   );
 
   const onDragOver = event => {
@@ -54,8 +57,9 @@ const Pros = ({ name, dispatch, items }) => {
     name === 'pros'
       ? (tmp = actionCreators.dropPro)
       : (tmp = actionCreators.dropCon);
-    return dispatch(tmp());
-  }, [dispatch, name]);
+    dispatch(tmp());
+    save();
+  }, [dispatch, name, save]);
 
   return (
     <div>
@@ -86,6 +90,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Pros);
-
-// DRY -
+)(NamedList);
