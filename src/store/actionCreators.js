@@ -53,6 +53,5 @@ export const initLists = () => dispatch => {
   readFromWebSQL(dispatch);
 };
 export const store = () => (dispatch, getState) => {
-  // console.log('actioncreators.store called');
   writeToWebSQL(dispatch, getState);
 };

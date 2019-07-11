@@ -35,7 +35,6 @@ const List = props => {
 
   const change = useCallback(
     event => {
-      // event.persist();
       if (event.target.value !== '') {
         !emptyInput && setEmptyInput(true);
       } else {
