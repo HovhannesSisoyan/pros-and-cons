@@ -5,7 +5,7 @@ const save = () => ({
 });
 
 export const writeToWebSQL = (dispatch, getState) => {
-  console.log('write to db called');
+  // console.log('write to db called');
   const state = getState();
   db.transaction(function(tx) {
     tx.executeSql('DELETE FROM PROS');
