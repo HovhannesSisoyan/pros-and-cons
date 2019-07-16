@@ -1,4 +1,5 @@
-// import { openIndexedDBRequest } from './prepareIndexedDB';
+import * as database from './prepareIndexedDB';
+
 export const initializePros = list => ({
   type: 'INIT_PROS',
   list,
@@ -8,18 +9,32 @@ export const initializeCons = list => ({
   list,
 });
 export const readFromIndexedDB = dispatch => {
-  const openIndexedDBRequest = window.indexedDB.open('MyTestDatabase', 3);
-  // eslint-disable-next-line no-multi-assign
-  let db = (openIndexedDBRequest.onsuccess = event => event.target.result);
+  console.log('read from indexed db called');
+  const opendbRequest = window.indexedDB.open(
+    database.dbName,
+    database.dbVersion
+  );
+  const dbRequest = opendbRequest;
 
-  // eslint-disable-next-line no-multi-assign
-  db = openIndexedDBRequest.onupgradeneeded = event => event.target.result;
+  dbRequest.onsuccess = () => {
+    const db = dbRequest.result;
+    const tr = db.transaction(['PROS', 'CONS']);
+    const prosStore = tr.objectStore('PROS');
+    const consStore = tr.objectStore('CONS');
+    const prosReq = prosStore.getAll();
+    const consReq = consStore.getAll();
+    prosReq.onsuccess = () => {
+      dispatch(initializePros(prosReq.result));
+    };
+    consReq.onsuccess = () => {
+      dispatch(initializeCons(consReq.result));
+    };
+  };
 
-  // export const readFromIndexedDB = dispatch => {
-  db.transaction(['PROS', 'CONS']).objectStore(['PROS', 'CONS']);
-  // objectStore.getAll().onsuccess = function(event) {
-  //  console.log(`Got all customers: ${event.target.result}`);
-  //  dispatch(initializePros());
-  // };
-  // };
+  dbRequest.onupgradeneeded = () => {
+    console.log('db request onupgradeneeded called');
+    const db = dbRequest.result;
+    db.createObjectStore('PROS', { autoIncrement: true });
+    db.createObjectStore('CONS', { autoIncrement: true });
+  };
 };

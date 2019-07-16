@@ -2,8 +2,8 @@
 /* eslint-disable no-empty-pattern */
 /* eslint-disable no-plusplus */
 /* eslint-disable no-shadow */
-import { readFromWebSQL } from './localStorage/readFromWebSQL';
-import { writeToWebSQL } from './localStorage/writeToWebSQL';
+// import { readFromWebSQL } from './localStorage/readFromWebSQL';
+// import { writeToWebSQL } from './localStorage/writeToWebSQL';
 import { writeToIndexedDB } from './localStorage/writeToIndexedDB';
 import { readFromIndexedDB } from './localStorage/readFromIndexedDB';
 
@@ -52,10 +52,10 @@ export const dropCon = () => ({
 });
 
 export const initLists = () => dispatch => {
-  readFromWebSQL(dispatch);
+  // readFromWebSQL(dispatch);
   readFromIndexedDB(dispatch);
 };
 export const store = () => (dispatch, getState) => {
   writeToIndexedDB(dispatch, getState);
-  writeToWebSQL(dispatch, getState);
+  // writeToWebSQL(dispatch, getState);
 };
