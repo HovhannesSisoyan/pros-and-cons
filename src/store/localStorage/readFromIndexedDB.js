@@ -1,13 +1,7 @@
+/* eslint-disable import/no-cycle */
 import * as database from './prepareIndexedDB';
+import * as actions from '../actionCreators';
 
-export const initializePros = list => ({
-  type: 'INIT_PROS',
-  list,
-});
-export const initializeCons = list => ({
-  type: 'INIT_CONS',
-  list,
-});
 export const readFromIndexedDB = dispatch => {
   console.log('read from indexed db called');
   const opendbRequest = window.indexedDB.open(
@@ -24,10 +18,10 @@ export const readFromIndexedDB = dispatch => {
     const prosReq = prosStore.getAll();
     const consReq = consStore.getAll();
     prosReq.onsuccess = () => {
-      dispatch(initializePros(prosReq.result));
+      dispatch(actions.initializePros(prosReq.result));
     };
     consReq.onsuccess = () => {
-      dispatch(initializeCons(consReq.result));
+      dispatch(actions.initializeCons(consReq.result));
     };
   };
 

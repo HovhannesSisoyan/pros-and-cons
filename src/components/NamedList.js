@@ -1,4 +1,3 @@
-/* eslint-disable spaced-comment */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
 import React, { useCallback } from 'react';
@@ -8,10 +7,8 @@ import * as actionCreators from '../store/actionCreators';
 import List from './List';
 
 const NamedList = ({ name, dispatch, items }) => {
-  // eslint-disable-next-line arrow-body-style
-  const save = useCallback(() => {
-    return dispatch(actionCreators.store());
-  }, [dispatch]);
+  const save = useCallback(() => dispatch(actionCreators.store()), [dispatch]);
+
   const onItemAdded = useCallback(
     item => {
       let tmp;
@@ -23,9 +20,25 @@ const NamedList = ({ name, dispatch, items }) => {
     },
     [dispatch, name, save]
   );
+
+  const onItemRemoved = useCallback(
+    index => {
+      let tmp;
+      name === 'pros'
+        ? (tmp = actionCreators.removePro)
+        : (tmp = actionCreators.removeCon);
+      dispatch(tmp(index));
+      save();
+    },
+    [dispatch, name, save]
+  );
+
   const onItemEdited = useCallback(
     (event, index) => {
       event.persist();
+      if (!event.target.value) {
+        onItemRemoved(index);
+      }
       let tmp;
       name === 'pros'
         ? (tmp = actionCreators.editPro)
@@ -33,7 +46,7 @@ const NamedList = ({ name, dispatch, items }) => {
       dispatch(tmp(event, index));
       save();
     },
-    [dispatch, name, save]
+    [dispatch, name, save, onItemRemoved]
   );
 
   const onDragStart = useCallback(

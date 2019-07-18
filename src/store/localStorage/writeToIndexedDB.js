@@ -1,10 +1,8 @@
+/* eslint-disable import/no-cycle */
 import * as database from './prepareIndexedDB';
+import * as actions from '../actionCreators';
 
 let db;
-
-const save = () => ({
-  type: 'STORE',
-});
 
 export const writeToIndexedDB = function(dispatch, getState) {
   console.log('write to indexed db called');
@@ -29,7 +27,7 @@ export const writeToIndexedDB = function(dispatch, getState) {
       state.prosList.forEach(item => {
         const prosReq = prosStore.add(item);
         prosReq.onsuccess = () => {
-          dispatch(save());
+          dispatch(actions.save());
         };
       });
     };
@@ -38,7 +36,7 @@ export const writeToIndexedDB = function(dispatch, getState) {
       state.consList.forEach(item => {
         const consReq = consStore.add(item);
         consReq.onsuccess = () => {
-          dispatch(save());
+          dispatch(actions.save());
         };
       });
     };

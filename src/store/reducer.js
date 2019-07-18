@@ -18,11 +18,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         prosList: [...action.list],
       };
+
     case actionTypes.INIT_CONS:
       return {
         ...state,
         consList: [...action.list],
       };
+
     case actionTypes.ADD_PRO:
       tempArray = [...state.prosList].concat(action.item);
       return {
@@ -112,8 +114,10 @@ const reducer = (state = initialState, action) => {
         consList: [...tempArray2].concat(state.dragingItem),
         dragingItem: '',
       };
+
     case actionTypes.STORE:
       return state;
+
     default:
       return state;
   }
